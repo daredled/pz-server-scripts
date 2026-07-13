@@ -1,23 +1,20 @@
 @echo off
-setlocal
+setlocal enabledelayedexpansion
 
-set "steamcmdLocation=C:\steamcmd"
 set "installDir=C:\pzserver"
+set "appId=380870"
 
-if "%steamUsername%"=="" (
-    echo ERROR: steamUsername environment variable is not set.
-    echo   set steamUsername=yourSteamAccount
+if "%STEAM_USER%"=="" (
+    echo ERROR: STEAM_USER environment variable is not set.
+    echo   set STEAM_USER=yourSteamAccount
     exit /b 1
 )
 
-set "validateFlag="
-set "betaFlag="
+set "installArgs="
 for %%A in (%*) do (
-    if /I "%%A"=="verify" set "validateFlag=validate"
-    if /I "%%A"=="b42" set "betaFlag=-beta unstable"
+    if /I "%%A"=="verify" set "installArgs=!installArgs! validate"
+    if /I "%%A"=="b42" set "installArgs=!installArgs! beta:unstable" & set "installDir=C:\pzserverb42"
 )
-
-if defined betaFlag set "installDir=C:\pzserverb42"
 
 wmic process where "name='java.exe'" get commandline 2>nul | findstr /I "pzserver" >nul
 if not errorlevel 1 (
@@ -26,29 +23,9 @@ if not errorlevel 1 (
     exit /b 1
 )
 
-if not exist "%steamcmdLocation%\steamcmd.exe" (
-    echo steamcmd.exe not found in "%steamcmdLocation%" - installing it first.
-    call "%~dp0install_steamcmd.bat"
-    if errorlevel 1 (
-        echo ERROR: install_steamcmd.bat failed.
-        pause
-        exit /b 1
-    )
+call "%~dp0common\install_steam_app.bat" %appId% "%installDir%" %installArgs%
+if errorlevel 1 (
+    echo ERROR: install_steam_app.bat failed.
+    pause
+    exit /b 1
 )
-
-cd /d "%steamcmdLocation%"
-
-set CMD=^
-+force_install_dir "%installDir%" ^
-+login %steamUsername% ^
-+app_update 380870 %betaFlag% %validateFlag% ^
-+quit
-
-steamcmd %CMD%
-
-rem steamcmd routinely returns a non-zero exit code on +quit even after a
-rem successful update (a known steamcmd quirk, not a real failure signal),
-rem so we don't gate on errorlevel here. Check the output above / C:\steamcmd\logs
-rem if you suspect the update actually failed.
-
-echo Update complete (exit code %errorlevel% - see steamcmd output above).

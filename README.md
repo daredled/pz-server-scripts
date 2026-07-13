@@ -2,15 +2,27 @@
 
 Windows batch scripts for running and updating a Project Zomboid dedicated server hosted at `C:\pzserver` (Build 41) / `C:\pzserverb42` (Build 42 unstable), using SteamCMD at `C:\steamcmd`.
 
+SteamCMD installation and app updates are handled by the shared
+[steamcmd-server-scripts](https://github.com/daredled/steamcmd-server-scripts)
+repo, checked out here as the `common/` git submodule.
+
 ## Setup
+
+Clone with submodules:
+
+```
+git clone --recurse-submodules https://github.com/daredled/pz-server-scripts.git
+```
+
+If already cloned without that flag: `git submodule update --init`.
 
 Set your Steam account username as an environment variable before running `pz_server_install.bat` (never hardcoded in the scripts):
 
 ```
-set steamUsername=yourSteamAccount
+set STEAM_USER=yourSteamAccount
 ```
 
-Use `setx steamUsername yourSteamAccount` instead if you want it to persist across cmd sessions.
+Use `setx STEAM_USER=yourSteamAccount` instead if you want it to persist across cmd sessions.
 
 ## Scripts
 
@@ -40,8 +52,8 @@ pz_server_install.bat b42 verify
 
 Refuses to run if a Project Zomboid `java.exe` process already appears to be running.
 
-### `install_steamcmd.bat`
-Downloads and bootstraps SteamCMD into `C:\steamcmd` if it isn't already installed. Called automatically by `pz_server_install.bat`; you normally don't need to run it directly.
+### `common/install_steamcmd.bat` and `common/install_steam_app.bat`
+Shared scripts from the `steamcmd-server-scripts` submodule. Called automatically by `pz_server_install.bat`; you normally don't need to run them directly. See that repo's README for details.
 
 ## Notes
 

@@ -1,7 +1,7 @@
 @echo off
 setlocal
 
-set "steamcmdLocation=D:\steamcmd"
+set "steamcmdLocation=C:\steamcmd"
 set "steamcmdUrl=https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
 set "tempZip=%TEMP%\steamcmd.zip"
 

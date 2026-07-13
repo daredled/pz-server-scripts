@@ -1,10 +1,10 @@
 @echo off
 setlocal
 
-set "serverLocation=D:\pzserver"
+set "serverLocation=C:\pzserver"
 set "serverNameArg="
 if /I "%~1"=="b42" (
-    set "serverLocation=D:\pzserverb42"
+    set "serverLocation=C:\pzserverb42"
     rem B41 and B42 share the same %USERPROFILE%\Zomboid data folder and both
     rem default to a save named "servertest" if no -servername is given, so B42
     rem would otherwise load the existing B41 "servertest" save and crash

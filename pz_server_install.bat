@@ -23,9 +23,9 @@ if not errorlevel 1 (
     exit /b 1
 )
 
-call "%~dp0common\install_steam_app.bat" %appId% "%installDir%" %installArgs%
+call "%~dp0common\steam_app_install.bat" %appId% "%installDir%" %installArgs%
 if errorlevel 1 (
-    echo ERROR: install_steam_app.bat failed.
+    echo ERROR: steam_app_install.bat failed.
     pause
     exit /b 1
 )

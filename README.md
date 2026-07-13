@@ -35,7 +35,7 @@ Starts the dedicated server.
 Refuses to start if a Project Zomboid `java.exe` process already appears to be running, or if `StartServer64.bat` isn't found in the target install folder.
 
 ### `pz_server_install.bat`
-Updates/installs the server via SteamCMD. Requires the `steamUsername` env var (see Setup). Installs `steamcmd` automatically via `install_steamcmd.bat` if it isn't present yet.
+Updates/installs the server via SteamCMD. Requires the `STEAM_USER` env var (see Setup). Installs `steamcmd` automatically via `common/steamcmd_install.bat` if it isn't present yet.
 
 Optional arguments, in any order:
 
@@ -52,7 +52,7 @@ pz_server_install.bat b42 verify
 
 Refuses to run if a Project Zomboid `java.exe` process already appears to be running.
 
-### `common/install_steamcmd.bat` and `common/install_steam_app.bat`
+### `common/steamcmd_install.bat` and `common/steam_app_install.bat`
 Shared scripts from the `steamcmd-server-scripts` submodule. Called automatically by `pz_server_install.bat`; you normally don't need to run them directly. See that repo's README for details.
 
 ## Notes
